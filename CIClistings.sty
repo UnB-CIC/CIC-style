@@ -1,0 +1,138 @@
+% Arquivo CIClistings.sty
+%
+% criado em 2014 por Guilherme N. Ramos (gnramos@unb.br)
+% 
+% Este arquivo pode ser distribuído e/ou modificado conforme:
+%     1. LaTeX Project Public License e/ou
+%     2. GNU Public License.
+
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]%
+\ProvidesPackage{CIClistings}[2014/09/19 Estilo CIC para apresentacao de codigo.]%
+
+\RequirePackage{listings}%
+\RequirePackage{xcolor}%
+
+\renewcommand{\ttdefault}{pcr}% monospace
+
+%http://tex.stackexchange.com/questions/18969/creating-a-zebra-effect-using-listings
+\newlength{\@lstnumbersepLength}%
+\newcommand\realnumberstyle[1]{}%
+\newcommand{\zebra}[2]{%
+    {\realnumberstyle{#2}}%
+    \begingroup%
+    \lst@basicstyle%
+    \ifodd\value{lstnumber}%
+        \color{#1}%
+        \rlap{\settowidth{\@lstnumbersepLength}{\thelstnumber}%
+        \addtolength{\linewidth}{\@lstnumbersepLength}%
+        \color@block{\linewidth}{\ht\strutbox}{\dp\strutbox}}%
+    \fi%
+    \endgroup%
+}%
+
+\definecolor{greenUnB}{HTML}{006633}%
+\definecolor{blueUnB}{HTML}{003366}%
+\definecolor{redUnB}{HTML}{BC0000}%
+
+\lstdefinestyle{CIC-style}{%
+inputencoding=utf8%
+,basicstyle=\footnotesize\ttfamily%
+,keywordstyle=\color{blueUnB}\bfseries%
+,stringstyle=\color{redUnB}%
+,commentstyle=\color{greenUnB}%
+%,identifierstyle=\color{orange}%
+,morecomment=[l]{//}%
+,showstringspaces=false%
+,tabsize=2%
+,breaklines=true%
+,showlines=true%
+,keepspaces=true%
+,flexiblecolumns=true%
+,numbers=left%
+,numbersep=5pt%
+,numberstyle=\zebra{gray!10}\footnotesize\color{gray}%
+,xleftmargin=.025\textwidth
+,firstnumber=1%
+,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
+          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
+          {á}{{\'{a}}}1 {Á}{{\'{A}}}1%
+          {à}{{\`{a}}}1 {À}{{\`{A}}}1%
+          {ê}{{\^{e}}}1 {Ê}{{\^{E}}}1%
+          {é}{{\'{e}}}1 {É}{{\'{E}}}1%
+          {í}{{\'{i}}}1 {É}{{\'{E}}}1%
+          {ô}{{\^{o}}}1 {Ô}{{\^{O}}}1%
+          {õ}{{\~{o}}}1 {Õ}{{\~{O}}}1%
+          {ó}{{\'{o}}}1 {Ó}{{\'{O}}}1%
+          {ú}{{\'{u}}}1 {Ú}{{\'{U}}}1%
+          {ü}{{\"{u}}}1 {Ü}{{\"{U}}}1%
+          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
+}%
+
+\lstset{style=CIC-style}%
+
+\lstdefinestyle{C-code}{language=C,morekeywords={main,printf,scanf,NULL,size_t,
+,getchar,putchar,gets,puts%
+,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
+,malloc,calloc,realloc,free}}%
+
+\newcommand\@keywordstyle[1]{{\color{blueUnB}\bfseries{#1}}}%
+\lstdefinestyle{pseudo-code}{%
+,morestring=[b]"%
+,morecomment=[s][commentstyle]{/*}{*/}%
+,morekeywords={Algoritmo, Constantes, Fim
+,real, inteiro, vetor, string, caractere, booleano, arquivo, registro, ponteiro
+,Se, FimSe, VERDADEIRO, FALSO
+,Para, Cada, Em, FimPara, Enquanto, FimEnquanto, Repita
+,Conforme, Caso, OutrosCasos, FimConforme
+,Retorne, Leia, Escreva
+,Abra, Feche, Reserve, Libere, Tamanho, NIL}%
+,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
+          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
+          {á}{{\'{a}}}1 {Á}{{\'{A}}}1%
+          {à}{{\`{a}}}1 {À}{{\`{A}}}1%
+          {ê}{{\^{e}}}1 {Ê}{{\^{E}}}1%
+          {é}{{\'{e}}}1 {É}{{\'{E}}}1%
+          {í}{{\'{i}}}1 {Í}{{\'{I}}}1%
+          {ô}{{\^{o}}}1 {Ô}{{\^{O}}}1%
+          {õ}{{\~{o}}}1 {Õ}{{\~{O}}}1%
+          {ó}{{\'{o}}}1 {Ó}{{\'{O}}}1%
+          {ú}{{\'{u}}}1 {Ú}{{\'{U}}}1%
+          {ü}{{\"{u}}}1 {Ü}{{\"{U}}}1%
+          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
+          {Definições}{{\@keywordstyle{Defini\c{c}\~{o}es}}}9%
+          {Variáveis}{{\@keywordstyle{Vari\'{a}veis}}}9%
+          {Início}{{\@keywordstyle{In\'{i}cio}}}6%
+          {Função}{{\@keywordstyle{Fun\c{c}\~{a}o}}}6%
+          {Então}{{\@keywordstyle{Ent\~{a}o}}}5%
+          {Senão}{{\@keywordstyle{Sen\~{a}o}}}5%
+          {Não}{{\@keywordstyle{N\~{a}o}}}7%
+          {Até}{{\@keywordstyle{At\'{e}}}}3%
+          {Faça}{{\@keywordstyle{Fa\c{c}a}}}4%
+          {/de}{{\@keywordstyle{de}}}2%
+          {/land}{{\@keywordstyle{E}}}1%
+          {/lor}{{\@keywordstyle{Ou}}}2%
+          {<-}{{$\gets$}}2%
+          {<=}{{$\leq$}}2%
+          {>=}{{$\geq$}}2%
+          {!=}{{$\neq$}}2%
+          {^2}{{$^2$}}1%
+          {/neg}{{$\neg$}}1%
+          {/in}{{$\in$}}2%
+          {emptyset}{{$\emptyset$}}1%
+          {A_1}{{$A_{1}$}}2%
+          {A_2}{{$A_{2}$}}2%
+          {A_3}{{$A_{3}$}}2%
+          {A_99}{{$A_{99}$}}2%
+          {A_100}{{$A_{100}$}}3%
+          {A_101}{{$A_{101}$}}3%
+          {A_n}{{$A_{n}$}}2%
+}%
+
+%Insere um arquivo de código C
+\newcommand{\lstinputCcode}[1][]{\begingroup\catcode`_=12 \@dolstinputCcode[#1]}%
+\newcommand{\@dolstinputCcode}[2][]{%
+  \IfFileExists{#2}%
+    {\lstinputlisting[title={\texttt{#2}},style=C-code,#1]{#2}}%
+    {\lstinputlisting[title={\texttt{#2}},style=C-code,#1]{code/#2}}%
+  \endgroup%
+}%

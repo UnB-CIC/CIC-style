@@ -1,0 +1,31 @@
+% Arquivo CIC.sty
+%
+% criado em 2013 por Guilherme N. Ramos (gnramos@unb.br)
+% 
+% Este arquivo pode ser distribuído e/ou modificado conforme:
+%     1. LaTeX Project Public License e/ou
+%     2. GNU Public License.
+
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]%
+\ProvidesPackage{CIC}[2013/01/01 Estilo CIC para UnBeamer.]%
+
+% Codificação
+\usepackage[brazilian]{babel}%
+\usepackage[utf8]{inputenc}%
+
+% Inicialização
+\author[gnramos]{Prof. Guilherme N. Ramos\\\texttt{gnramos@unb.br}}%
+\institute[CIC]{Departamento de Ciência da Computação\\Universidade de Brasília}%
+\date[2014/1]{}%
+
+\graphicspath{{img/}}%
+
+\usepackage{CIClistings}%
+\usepackage{CICflowchart}%
+
+\lstset{xleftmargin=2\unbeamer@halfMarginWidth
+,escapechar=@%  Escapechar é importante para o comando \uncoverComment
+}%
+
+% Animação de comentários.
+\newcommand{\uncoverComment}[2][+-]{\uncover<#1>{\color{greenUnB}/* #2 */}}%
