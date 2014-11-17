@@ -23,9 +23,19 @@
 \usepackage{CIClistings}%
 \usepackage{CICflowchart}%
 
+% Define a margem e escapechar
 \lstset{xleftmargin=2\unbeamer@halfMarginWidth
-,escapechar=@%  Escapechar é importante para o comando \uncoverComment
+,escapechar=@%  usado no comando \uncoverComment
 }%
 
 % Animação de comentários.
 \newcommand{\uncoverComment}[2][+-]{\uncover<#1>{\color{greenUnB}/* #2 */}}%
+% Exemplo (mostra no 2 overlay mas não no handout):
+%    Escreva(MultiplicaPorY(1))  @\uncoverComment[2 | handout:0]{"10"}@
+
+% Formatação de uma função em texto comum. Aceita argumentos opcionais entre {}s.
+\def\@fnArgument#1{\texttt{(#1)}{}}%
+\newcommand{\fn}[1]{\texttt{#1}\@ifnextchar\bgroup{\@fnArgument}{}}%
+% Exemplos:
+%    \fn{exitFailure}
+%    \fn{main}{int argc, char *argv}
