@@ -34,4 +34,4 @@ Utilização
 ----------
 
 Os detalhes estão descritos no arquivo PDF gerado, mas também são criados arquivos
-```.tex``` que exemplificam o uso.
+```.tex``` que exemplificam o uso. Este pacote é complementar a classe [UnBeamer](https://github.com/gnramos/UnBeamer).
