@@ -3,48 +3,35 @@ CIC-style
 
 Definição de estilos para LaTeX para uso no [CIC/UnB](https://www.cic.unb.br/).
 
-CICflowchart
-------------
+Instalação
+----------
 
-Estilo para elaboração de fluxogramas usando [Tikz](http://sourceforge.net/projects/pgf/).
+Para instalar, basta seguir os seguintes passos:
 
-Exemplo:
+- Obter o [arquivo ZIP](https://github.com/gnamos/CIC-style/archive/master.zip).
 
-    \begin{tikzpicture}[node distance=3em]
-        \node[startstop] (1) {Início};
-        \node[decision, below of=1, yshift=-3em] (2) {Condição verdadeira?} edge[from] (1);
-        \node[process, below of=2, yshift=-3em] (3) {Ação 2};
-        \node[process, right of=2, xshift=6em] (4) {Ação 1};
-        \node[startstop, below of=3] {Fim} edge[from] (3);
-        \draw [to] (2) -- node[anchor=east] {não} (3);
-        \draw [to] (2) -- node[anchor=south] {sim} (4);
-        \draw [from] (3) -| (4);
-    \end{tikzpicture}}
-    
+- Descompactar o arquivo para [diretório local](http://tug.org/tds/tds.html) (no caso do [MikTeX](http://miktex.org/), vejam [aqui](http://docs.miktex.org/manual/localadditions.html)).
 
-CIClistings
------------
+```bash
+unzip CIC-style-master.zip -d ~/texmf/tex/latex
+```
 
-Estilo para apresentação de código usando [listings](http://www.ctan.org/pkg/listings).
-São definidos 3 estilos:
+- Gerar a documentação e os arquivos do pacote.
 
-* _CIC-style_ (padrão)
-* _C-code_ (para código C)
-* _pseudo-code_ (para pseudocódigo)
+```bash
+cd ~/texmf/tex/latex
+pdflatex CIC-style.dtx
+```
 
-Exemplo:
+- Embora desnecessário nas versões mais recentes do [TeX Live](https://www.tug.org/texlive/),
+pode ser preciso atualizar os registros.
 
-    \begin{lstlisting}[style=C-code]
-    #include <stdio.h>
-    int main() {
-        printf("Hello world!");
+```bash
+texhash ~/texmf
+```
 
-        return 0;
-    }
-    \end{lstlisting}
+Utilização
+----------
 
-CIC
----
-
-Incorporação de _CICflowchart_ e _CIClistings_ para uso com a classe 
-[UnBeamer](https://github.com/gnramos/UnBeamer).
+Os detalhes estão descritos no arquivo PDF gerado, mas também são criados arquivos
+```.tex``` que exemplificam o uso.

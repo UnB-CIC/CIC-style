@@ -1,0 +1,719 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2015 by Guilherme N. Ramos (gnramos@unb.br)
+%
+% Este arquivo pode ser distribuído e/ou modificado conforme:
+%    1. LaTeX Project Public License e/ou
+%    2. GNU Public License.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{CIC.dtx}
+%</driver>
+%<*all>
+
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]%
+
+%</all>
+%
+%<lst>\ProvidesPackage{CIClistings}[2015/02/03 v0.2 Estilo CIC para apresentacao de codigo.]%
+%<lst>
+%<lst>\RequirePackage{listings}% Inserção de código fonte
+%<lst>\RequirePackage{xcolor}%   Definição de cores
+%<lst>
+%<lst>% Cores
+%<lst>\definecolor{greenUnB}{HTML}{006633}%
+%<lst>\definecolor{blueUnB}{HTML}{003366}%
+%<lst>\definecolor{redUnB}{HTML}{BC0000}%
+%<lst>
+%<lst>% Estilos para código.
+%<lst>\def\basicstyle{\footnotesize\ttfamily}%
+%<lst>\def\keywordstyle{\color{blueUnB}\bfseries}%
+%<lst>\def\stringstyle{\color{redUnB}}%
+%<lst>\def\commentstyle{\color{greenUnB}}%
+%<lst>
+%<lst>% Alternar cores de fundo para linhas de código (facilita a leitura).
+%<lst>% (baseado em: http://tex.stackexchange.com/questions/18969)
+%<lst>\newlength{\@lstnumbersepLength}%
+%<lst>\newcommand\@realnumberstyle[1]{}%
+%<lst>\newcommand{\zebra}[2]{%
+%<lst>    {\@realnumberstyle{#2}}%
+%<lst>    \begingroup%
+%<lst>    \lst@basicstyle%
+%<lst>    \ifodd\value{lstnumber}%
+%<lst>        \color{#1}%
+%<lst>        \rlap{\settowidth{\@lstnumbersepLength}{\thelstnumber}%
+%<lst>        \addtolength{\linewidth}{\@lstnumbersepLength}%
+%<lst>        \color@block{\linewidth}{\ht\strutbox}{\dp\strutbox}}%
+%<lst>    \fi%
+%<lst>    \endgroup%
+%<lst>}%
+%<lst>
+%<lst>% Estilos
+%<lst>\lstdefinestyle{CIC}{%
+%<lst>inputencoding=utf8%
+%<lst>,basicstyle=\basicstyle%
+%<lst>,keywordstyle=\keywordstyle%
+%<lst>,stringstyle=\stringstyle%
+%<lst>,commentstyle=\commentstyle%
+%<lst>%,identifierstyle=\color{orange}%
+%<lst>,escapechar=@%
+%<lst>,morecomment=[l]{//}%
+%<lst>,showstringspaces=false%
+%<lst>,tabsize=2%
+%<lst>,breaklines=true%
+%<lst>,showlines=true%
+%<lst>,keepspaces=true%
+%<lst>,flexiblecolumns=true%
+%<lst>,numbers=left%
+%<lst>,numbersep=5pt%
+%<lst>,numberstyle=\zebra{gray!10}\tiny\color{blueUnB}%
+%<lst>,xleftmargin=.025\textwidth
+%<lst>,firstnumber=1%
+%<lst>,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
+%<lst>          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
+%<lst>          {á}{{\'{a}}}1 {Á}{{\'{A}}}1%
+%<lst>          {à}{{\`{a}}}1 {À}{{\`{A}}}1%
+%<lst>          {ê}{{\^{e}}}1 {Ê}{{\^{E}}}1%
+%<lst>          {é}{{\'{e}}}1 {É}{{\'{E}}}1%
+%<lst>          {í}{{\'{i}}}1 {É}{{\'{E}}}1%
+%<lst>          {ô}{{\^{o}}}1 {Ô}{{\^{O}}}1%
+%<lst>          {õ}{{\~{o}}}1 {Õ}{{\~{O}}}1%
+%<lst>          {ó}{{\'{o}}}1 {Ó}{{\'{O}}}1%
+%<lst>          {ú}{{\'{u}}}1 {Ú}{{\'{U}}}1%
+%<lst>          {ü}{{\"{u}}}1 {Ü}{{\"{U}}}1%
+%<lst>          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
+%<lst>}%
+%<lst>
+%<lst>\lstdefinestyle{CIC-C}{style=CIC,language=C
+%<lst>,morekeywords={main,printf,scanf,NULL,size_t,
+%<lst>,getchar,putchar,gets,puts%
+%<lst>,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
+%<lst>,malloc,calloc,realloc,free,abs,fabs%
+%<lst>,system,atoi,itoa}}%
+%<lst>
+%<lst>\lstdefinestyle{CIC-pseudo}{%
+%<lst>style=CIC
+%<lst>,morestring=[b]"%
+%<lst>,morecomment=[s][commentstyle]{/*}{*/}%
+%<lst>,morekeywords={Algoritmo, Constantes, Fim
+%<lst>,real, inteiro, vetor, string, caractere, booleano, arquivo, registro, ponteiro
+%<lst>,Se, FimSe, VERDADEIRO, FALSO
+%<lst>,Para, Cada, Em, FimPara, Enquanto, FimEnquanto, Repita
+%<lst>,Conforme, Caso, OutrosCasos, FimConforme
+%<lst>,Retorne, Leia, Escreva
+%<lst>,Abra, Feche, Reserve, Libere, Tamanho, NIL}%
+%<lst>,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
+%<lst>          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
+%<lst>          {á}{{\'{a}}}1 {Á}{{\'{A}}}1%
+%<lst>          {à}{{\`{a}}}1 {À}{{\`{A}}}1%
+%<lst>          {ê}{{\^{e}}}1 {Ê}{{\^{E}}}1%
+%<lst>          {é}{{\'{e}}}1 {É}{{\'{E}}}1%
+%<lst>          {í}{{\'{i}}}1 {Í}{{\'{I}}}1%
+%<lst>          {ô}{{\^{o}}}1 {Ô}{{\^{O}}}1%
+%<lst>          {õ}{{\~{o}}}1 {Õ}{{\~{O}}}1%
+%<lst>          {ó}{{\'{o}}}1 {Ó}{{\'{O}}}1%
+%<lst>          {ú}{{\'{u}}}1 {Ú}{{\'{U}}}1%
+%<lst>          {ü}{{\"{u}}}1 {Ü}{{\"{U}}}1%
+%<lst>          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
+%<lst>          {Definições}{{\keywordstyle{Defini\c{c}\~{o}es}}}9%
+%<lst>          {Variáveis}{{\keywordstyle{Vari\'{a}veis}}}9%
+%<lst>          {Início}{{\keywordstyle{In\'{i}cio}}}6%
+%<lst>          {Função}{{\keywordstyle{Fun\c{c}\~{a}o}}}6%
+%<lst>          {Então}{{\keywordstyle{Ent\~{a}o}}}5%
+%<lst>          {Senão}{{\keywordstyle{Sen\~{a}o}}}5%
+%<lst>          {Não}{{\keywordstyle{N\~{a}o}}}7%
+%<lst>          {Até}{{\keywordstyle{At\'{e}}}}3%
+%<lst>          {Faça}{{\keywordstyle{Fa\c{c}a}}}4%
+%<lst>          {/de}{{\keywordstyle{de}}}2%
+%<lst>          {/land}{{\keywordstyle{E}}}1%
+%<lst>          {/lor}{{\keywordstyle{Ou}}}2%
+%<lst>          {<-}{{$\gets$}}2%
+%<lst>          {<=}{{$\leq$}}2%
+%<lst>          {>=}{{$\geq$}}2%
+%<lst>          {!=}{{$\neq$}}2%
+%<lst>          {^2}{{$^2$}}1%
+%<lst>          {/neg}{{$\neg$}}1%
+%<lst>          {/in}{{$\in$}}2%
+%<lst>          {/infty}{{$\infty$}}2%
+%<lst>          {/exists}{{$\exists$}}2%
+%<lst>          {emptyset}{{$\emptyset$}}1%
+%<lst>          {A_1}{{$A_{1}$}}2%
+%<lst>          {A_2}{{$A_{2}$}}2%
+%<lst>          {A_3}{{$A_{3}$}}2%
+%<lst>          {A_99}{{$A_{99}$}}2%
+%<lst>          {A_100}{{$A_{100}$}}3%
+%<lst>          {A_101}{{$A_{101}$}}3%
+%<lst>          {A_n}{{$A_{n}$}}2%
+%<lst>}%
+%<lst>
+%<lst>
+%<lst>% Comandos
+%<lst>\@ifclassloaded{beamer}%
+%<lst>    {\newcommand<>{\uncoverComment}[1]{\only#2{\commentstyle/* #1 */}}}%
+%<lst>    {}%
+%<lst>
+%<lst>\newcommand{\basePathToFiles}[1]{\def\@basePathToFiles{#1}}%
+%<lst>\basePathToFiles{basePathToFilesNotSet}% Valor padrão
+%<lst>
+%<lst>\newcommand{\linkedFileStyle}[1]{\texttt{#1}}%
+%<lst>
+%<lst>\newcommand{\linkFile}{\begingroup\catcode`_=12\relax \@dolinkFile}%
+%<lst>\newcommand{\@dolinkFile}[2][.]{%
+%<lst>  \IfFileExists{\@basePathToFiles/#1/#2}%
+%<lst>    {\href{file://\@basePathToFiles/#1/#2}{\linkedFileStyle{#2}}}%
+%<lst>    {#2}%
+%<lst>  \endgroup%
+%<lst>}%
+%<lst>
+%<lst>\@ifclassloaded{beamer}%
+%<lst>    {\mode<handout|second|trans|article>{% sem link para handout. etc
+%<lst>          \renewcommand{\@dolinkFile}[2][]{\linkedFileStyle{#2}\endgroup}}%
+%<lst>    }%
+%<lst>    {}%
+%<lst>
+%<lst>\newcommand{\lstinputcode}{\begingroup\catcode`_=12\relax \@dolstinputcode}%
+%<lst>\newcommand{\@dolstinputcode}[2][]{%
+%<lst>  \IfFileExists{#2}%
+%<lst>    {\lstinputlisting[title={\linkFile{#2}},#1]{#2}}%
+%<lst>    {
+%<lst>      \IfFileExists{code/#2}%
+%<lst>      {\lstinputlisting[title={\linkFile[code]{#2}},#1]{code/#2}}%
+%<lst>      {\PackageWarning{CIClistings}{Arquivo ``#2'' nao encontrado.)}}%
+%<lst>    }%
+%<lst>  \endgroup%
+%<lst>}%
+%<lst>
+%<lst>\@ifclassloaded{beamer}%
+%<lst>{%
+%<lst>\newcommand<>{\terminalCommand}[2][\$]{%
+%<lst>\only#3{\colorbox{black}{\parbox[t]{\textwidth}{\textcolor{green}{\texttt{#1 #2}}}}}}%
+%<lst>}%
+%<lst>{%
+%<lst>\newcommand{\terminalCommand}[2][\$]{%
+%<lst>\colorbox{black}{\parbox[t]{\textwidth}{\textcolor{green}{\texttt{#1 #2}}}}}%
+%<lst>}%
+%<lst>
+%<lst>
+%<lst>% Configurações
+%<lst>
+%<lst>\renewcommand{\ttdefault}{pcr}% Fonte monospace
+%<lst>\lstset{style=CIC-C}% Estilo padrão para o ambiente listings
+%<lst>
+%<flow>\ProvidesPackage{CICflowchart}[2014/09/19 v0.2 Estilo CIC para desenho de fluxogramas.]%
+%<flow>% (baseado em https://www.sharelatex.com/blog/2013/08/29/tikz-series-pt3.html)
+%<flow>
+%<flow>\RequirePackage{tikz}%
+%<flow>
+%<flow>\usetikzlibrary{shapes.geometric, arrows}%
+%<flow>
+%<flow>\newlength{\fd}\setlength{\fd}{3em}%
+%<flow>\tikzstyle{flowchart}=[node distance=\fd]%
+%<flow>\tikzstyle{flowchartnode}=[draw=black,text centered,text width=1.7\fd, minimum height=1.5\baselineskip]%
+%<flow>
+%<flow>\tikzstyle{startstop}=[flowchartnode, rectangle, rounded corners, fill=red!30]%
+%<flow>\tikzstyle{io}=[flowchartnode, text width=1.3\fd, trapezium, trapezium left angle=75, trapezium right angle=105, fill=blue!30]%
+%<flow>\tikzstyle{process}=[flowchartnode, rectangle, fill=orange!30]%
+%<flow>\tikzstyle{decision}=[flowchartnode, diamond, fill=green!30, text badly centered, inner sep=0pt]%
+%<flow>
+%<flow>\tikzstyle{line}=[very thick]%
+%<flow>\tikzstyle{arrow}=[line,>=stealth]%
+%<flow>\tikzstyle{to}=[arrow, ->]%
+%<flow>\tikzstyle{from}=[arrow, <-]%
+%<flow>
+%<flow>
+%
+%<cic>\ProvidesPackage{CIC}[2015/03/02 v0.2 Estilo CIC.]%
+%<cic>
+%<cic>% Codificação
+%<cic>\usepackage[brazilian]{babel}%
+%<cic>\usepackage[utf8]{inputenc}%
+%<cic>
+%<cic>% Inicialização
+%<cic>%\author[turing]{Alan M. Turing\\\texttt{alan@turing.uk}}%
+%<cic>%\institute[CIC]{Departamento de Ciência da Computação\\Universidade de Brasília}%
+%<cic>%\date[2015/2]{}%
+%<cic>
+%<cic>\usepackage{CIClistings}%
+%<cic>\usepackage{CICflowchart}%
+%<cic>
+%<cic>% Formatação de uma função em texto comum. Aceita argumentos opcionais entre {}s.
+%<cic>\def\@fnArgument#1{\texttt{(#1)}{}}%
+%<cic>\newcommand{\fn}[1]{\texttt{#1}\@ifnextchar\bgroup{\@fnArgument}{}}%
+%<cic>% Exemplos:
+%<cic>%    \fn{exitFailure}
+%<cic>%    \fn{main}{int argc, char *argv}
+%<cic>
+%
+%<ex-lst>\documentclass{beamer}%
+%<ex-lst>
+%<ex-lst>\usepackage[brazilian]{babel}%
+%<ex-lst>\usepackage[utf8]{inputenc}%
+%<ex-lst>\usepackage{CIClistings}%
+%<ex-lst>
+%<ex-lst>\basePathToFiles{/home/gnramos/texmf/tex/latex/CIC-style}%
+%<ex-lst>
+%<ex-lst>\begin{document}%
+%<ex-lst>    \begin{frame}[fragile]
+%<ex-lst>    \frametitle{Código: CIC-pseudo}%
+%<ex-lst>
+%<ex-lst>    \begin{lstlisting}[title={Exemplo de Constantes/Variáveis},style=CIC-pseudo]
+%<ex-lst>Algoritmo PesoDaTurma
+%<ex-lst>Constantes
+%<ex-lst>    g : real <- 9.78 // m/s^2
+%<ex-lst>Variáveis
+%<ex-lst>    massa, acumulado : real
+%<ex-lst>    nome : string
+%<ex-lst>Início
+%<ex-lst>    acumulado <- 0
+%<ex-lst>    Para Cada aluno /in turma
+%<ex-lst>        Escreva("Digite seu nome: ")
+%<ex-lst>        Leia(nome)
+%<ex-lst>        Escreva("Digite sua massa: ")
+%<ex-lst>        Leia(massa)
+%<ex-lst>        Escreva(nome, " seu peso é ", massa*g)
+%<ex-lst>        acumulado <- acumulado + massa
+%<ex-lst>    FimPara
+%<ex-lst>    Escreva("O peso da turma é ", acumulado*g)
+%<ex-lst>Fim
+%<ex-lst>    \end{lstlisting}%
+%<ex-lst>\end{frame}
+%<ex-lst>
+%<ex-lst>\begin{frame}[fragile]
+%<ex-lst>    \frametitle{Código: CIC-C}%
+%<ex-lst>
+%<ex-lst>    \begin{lstlisting}[title={Exemplo de Código em \texttt{C}}]
+%<ex-lst>	#include <stdio.h>
+%<ex-lst>
+%<ex-lst>	int main() {
+%<ex-lst>	    int i;
+%<ex-lst>	    char nome[10]; @\uncoverComment<2->{10 é suficiente?}@
+%<ex-lst>
+%<ex-lst>	    printf("Qual seu nome?\n");
+%<ex-lst>	    scanf("%s", nome); @\uncoverComment<3->{implementação "perigosa"}@
+%<ex-lst>
+%<ex-lst>	    @\uncoverComment<2 | handout:0>{Olás!}@
+%<ex-lst>	    for(i = 0; i < 10; ++i)
+%<ex-lst>	        printf("Olá %s.\n", nome);
+%<ex-lst>
+%<ex-lst>	    return 0;
+%<ex-lst>	}
+%<ex-lst>    \end{lstlisting}%
+%<ex-lst>\end{frame}
+%<ex-lst>
+%<ex-lst>\begin{frame}[fragile]%
+%<ex-lst>    \frametitle{\textbackslash{lstinputcode}}%
+%<ex-lst>
+%<ex-lst>    \vspace{-1em}% ajuste vertical
+%<ex-lst>    \begin{columns}%
+%<ex-lst>        \column{\dimexpr\paperwidth-15pt}% diminuir as margens (ajuste horizontal)
+%<ex-lst>        \lstinputcode[firstline=7,morekeywords={refrao}]{incomodam.c}%
+%<ex-lst>    \end{columns}%
+%<ex-lst>\end{frame}
+%<ex-lst>
+%<ex-lst>\begin{frame}[fragile]%
+%<ex-lst>    \frametitle{\textbackslash{lstinputcode} \only<2->{\& \textbackslash{terminalCommand}}}%
+%<ex-lst>
+%<ex-lst>    \lstinputcode[escapechar=,lastline=5,morekeywords={refrao}]{incomodam.c}%
+%<ex-lst>    \vfill%
+%<ex-lst>    \terminalCommand<2->{./incomodam 3 elefante\\
+%<ex-lst>    1 elefante incomoda muita gente...\\
+%<ex-lst>    2 elefantes incomodam incomodam muito mais...\\
+%<ex-lst>    2 elefantes incomodam muita gente...\\
+%<ex-lst>    3 elefantes incomodam incomodam incomodam muito mais...\\
+%<ex-lst>    3 elefantes incomodam muita gente...\\
+%<ex-lst>    4 elefantes incomodam incomodam incomodam incomodam muito mais...}%
+%<ex-lst>\end{frame}
+%<ex-lst>
+%<ex-lst>\begin{frame}%
+%<ex-lst>    \frametitle{\textbackslash{linkFile}}%
+%<ex-lst>
+%<ex-lst>    Este estilo é utilizado no arquivo \linkFile{CIC.sty}%
+%<ex-lst>\end{frame}%
+%<ex-lst>\end{document}%
+%<ex-lst>
+%
+%<ex-flow>\documentclass{beamer}%
+%<ex-flow>
+%<ex-flow>\usepackage[brazilian]{babel}%
+%<ex-flow>\usepackage[utf8]{inputenc}%
+%<ex-flow>\usepackage{CICflowchart}%
+%<ex-flow>
+%<ex-flow>\begin{document}%
+%<ex-flow>\begin{frame}%
+%<ex-flow>    \frametitle{Fluxograma}%
+%<ex-flow>
+%<ex-flow>    \begin{center}
+%<ex-flow>        \begin{tikzpicture}[flowchart]\small%
+%<ex-flow>            \node[startstop] (1) {Início};%
+%<ex-flow>            \node[io, text width=.13\textwidth,below of=1] (2) {Leia $nome$} edge[from] (1);%
+%<ex-flow>            \node[io, text width=.15\textwidth,below of=2] (3) {``Olá \emph{nome}''} edge[from] (2);%
+%<ex-flow>            \node[decision, below of=3, yshift=-\fd] (4) {Entende fluxogramas?} edge[from] (3);%
+%<ex-flow>            \node[process, below of=4, yshift=-\fd] (5) {Estude fluxogramas};%
+%<ex-flow>            \node[io, right of=4, xshift=6em] (6) {``Ótimo!''};%
+%<ex-flow>            \node[process, below of=6,text width=.25\textwidth] (7) {Próximo assunto} edge[from] (6);%
+%<ex-flow>            \node[startstop, below of=7] {Fim} edge[from] (7);%
+%<ex-flow>            \draw[to] (4) -- node[anchor=east] {não} (5);%
+%<ex-flow>            \draw[to] (4) -- node[anchor=south] {sim} (6);%
+%<ex-flow>            \draw[to] (5.west) -- ++(-3em,0) |- (4);%
+%<ex-flow>        \end{tikzpicture}%
+%<ex-flow>    \end{center}%
+%<ex-flow>\end{frame}%
+%<ex-flow>\end{document}%
+%<ex-flow>
+%
+%<c>/**   @file: incomodam.c
+%<c> *  @author: Guilherme N. Ramos (gnramos@unb.br)
+%<c> *
+%<c> *  Código para incomodar muita gente... */
+%<c>
+%<c>#include <stdio.h>
+%<c>#include <stdlib.h>
+%<c>
+%<c>void incomoda(int n) { while(n--) printf("incomodam "); }
+%<c>void refrao(int n, const char *chato) {
+%<c>  if(n==2) printf("1 %s incomoda muita gente...\n", chato);
+%<c>  else printf("%d %ss incomodam muita gente...\n", n-1,	chato);
+%<c>
+%<c>  printf("%d %ss ", n, chato), incomoda(n), printf("muito mais...\n");
+%<c>}
+%<c>
+%<c>int main(int argc, char *argv[]) {
+%<c>  int i;
+%<c>
+%<c>  if(argc == 3 && atoi(argv[1]) > 0 && argv[2])
+%<c>    for(i = 1; i <= atoi(argv[1]);)
+%<c>      refrao(++i, argv[2]);
+%<c>
+%<c>  return 0;
+%<c>}
+%
+%<*batchfile>
+\begingroup
+\input docstrip.tex
+\keepsilent
+
+\preamble
+
+Arquivo gerado automaticamente.
+
+Copyright (C) 2015 by Guilherme N. Ramos (gnramos@unb.br)
+
+Este arquivo pode ser distribuído e/ou modificado conforme:
+    1. LaTeX Project Public License e/ou
+    2. GNU Public License.
+\endpreamble
+
+\askforoverwritefalse
+\generate{\file{CIC.sty}{\from{CIC.dtx}{all,cic}}
+          \file{CIClistings.sty}{\from{CIC.dtx}{all,lst}}
+          \file{CICflowchart.sty}{\from{CIC.dtx}{all,flow}}
+          \file{ex_lst.tex}{\from{CIC.dtx}{all,ex-lst}}
+          \file{ex_flow.tex}{\from{CIC.dtx}{all,ex-flow}}
+}
+\nopreamble\nopostamble
+\generate{\file{incomodam.c}{\from{\jobname.dtx}{c}}}
+
+\obeyspaces
+\endgroup
+%</batchfile>
+%
+%<*driver>
+\documentclass{ltxdoc}%
+\usepackage{CIC}[2015/02/03]%
+
+\usepackage{amssymb}%
+\usepackage{xcolor}%
+\usepackage[hidelinks]{hyperref}%
+
+\definecolor{greenUnB}{HTML}{006633}%
+\definecolor{blueUnB}{HTML}{003366}%
+\definecolor{redUnB}{HTML}{BC0000}%
+
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{CIC.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v0.2}{2015/02/02}{Versão inicial consolidada.}
+%
+% \GetFileInfo{CIC.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+% \newcommand{\pacote}[1]{\textsf{#1}}%
+% \newcommand{\bashCommand}[1]{\hspace{4em}\texttt{#1}}%
+% \newcommand{\sq}[1]{\textcolor{#1}{$\blacksquare$}#1\textcolor{#1}{$\blacksquare$}}%
+%
+% \title{Estilo \pacote{CIC}\thanks{Este documento corresponde a versão \fileversion, de \filedate.}}
+% \author{Guilherme N. Ramos \\ \texttt{gnramos@unb.br}}
+%
+% \maketitle
+%
+% \StopEventually{\PrintIndex\PrintChanges}
+%
+% \begin{abstract}
+% O pacote \pacote{CIC}\ define utilidades para criação de apresentações em
+% \href{http://www.ctan.org/pkg/beamer}{Beamer} do
+% \href{http://cic.unb.br/}{Departamento de Ciência da Computação} da
+% \href{http://www.unb.br}{Universidade de Brasília}.  A proposta é ter uma
+% identidade unificada para apresentações, buscando um visual simples.
+% \end{abstract}
+%
+% \section{Introdução}
+% \pacote{CIC}\ é um pacote complementar a classe
+% \href{https://github.com/gnramos/UnBeamer}{UnBeamer}, embora esta não seja
+% indispensável, e implementa algumas utilidades para criar uma apresentação no
+% escopo do CIC.
+%
+% \subsection{Requisitos}
+% Assume-se que as classes Beamer e \href{http://www.ctan.org/pkg/pgf}{Tikz} já
+% estejam disponíveis, e que haja certa familiaridade com seu uso para criar
+% apresentações. Conhecimentos sobre \LaTeX\ também são desejáveis..
+%
+% \subsection{Instalação}
+% Para instalar, basta seguir os seguintes passos:
+% \begin{itemize}
+% \item Obter o arquivo \href{https://github.com/gnramos/CIC-style/archive/master.zip}{ZIP}.
+% \item Descompactar o arquivo para diretório local.
+% \\\hspace{4em}\texttt{unzip CIC-style-master.zip -d \textasciitilde/texmf/tex/latex}
+% \item Gerar a documentação e os arquivos do pacote.
+% \\\bashCommand{cd \textasciitilde/texmf/tex/latex}
+% \\\bashCommand{pdflatex CIC.dtx}
+% \end{itemize}
+%
+% Embora desnecessário nas versões mais recentes do TeX Live, pode ser preciso
+% atualizar os registros.
+% \\\bashCommand{texhash \textasciitilde/texmf}
+%
+% \section{Pacote \protect\pacote{CIC}}
+% Um pacote para Beamer define detalhes da aparência e uma e série de utilidades
+% para facilitar a criação de uma apresentação. Inclui os pacotes descritos a seguir.
+%
+% \subsection{\protect\pacote{CIClistings}}
+% O arquivo CIClistings.sty define o pacote para apresentação de código fonte
+% utilizando o pacote \href{http://www.ctan.org/tex-archive/macros/latex/contrib/listings/}{listings}. São definidos estilos e comandos, descritos a seguir.
+%
+% \subsubsection{Estilos}
+% \paragraph{CIC}
+%
+% Estilo padrão, os detalhes podem ser vistos no próprio arquivo CIClistings.sty,
+% mas os destaques são a fonte monoespaçada e a alternância de cores entre linhas
+% para facilitar a leitura.
+%
+% Além disso, define como \emph{escapechar} o símbolo `$@$'.
+%
+% \paragraph{CIC-C}
+%
+% Estilo para linguagem C que incorpora o estilo CIC. Basicamente inclui as
+% definições da linguagemd C e define algumas palavras chaves.
+%
+% \paragraph{CIC-pseudo}
+% Estilo para pseudo-código (Português) que incorpora o estilo CIC. Basicamente
+% define algumas palavras chaves.
+%
+% \subsection{Comandos}
+% São diversos comandos definidos para auxiliar a inserção de código em uma
+% apresentação.
+%
+% \subsubsection{Comandos Genéricos}
+% Estes comandos são definidos para todas as classes.
+%
+% \begin{macro}{\basePathToFiles} \marg{caminho}\\
+% Define o \emph{caminho absoluto} para um arquivo a ser inserido no texto com um link pelo comando |\linkFile|.
+% modo que se possa criar links dentro da apresentação. Obviamente os links não
+% funcionarão caso o caminho não esteja correto (por exemplo, usando o PDF da apresentação em
+% outra máquina). Por exemplo:
+% \begin{verbatim}
+% \basePathToFiles{/workspace}%
+% \end{verbatim}
+% \end{macro}
+%
+% \begin{macro}{\linkedFileStyle} \marg{estilo}\\
+% Define o |<estilo>| do link para um arquivo inserido no texto com o comando |\linkFile|.
+% Pode ser redefinido (via |\renewcommand|). Por exemplo, para remover a formatação:
+% \begin{verbatim}
+% \renewcommand{\linkedFileStyle}[1]{#1}%
+% \end{verbatim}
+% \end{macro}
+%
+% \begin{macro}{\linkFile} \oarg{caminho} \marg{arquivo}\\
+% Insere o |<arquivo>| com o estilo definido por |\linkedFileStyle| se existir,
+% sem alterar o estilo caso contrário. a  verificação do arquivo é pelo caminho
+% absoluto completo, considerando uma alteração relativa definida pelo argumento
+% opcional. Ou seja, os diretórios definidos por |\basePathToFiles|/|<caminho>|/|<arquivo>|.
+% Caso seja usado com Beamer, deve ser considerado um comando não robusto (só
+% pode ser usado em um frame \emph{fragile}). Por exemplo:
+% \begin{verbatim}
+% \linkFile[CIC-style]{CIC.sty}%
+% \end{verbatim}
+% Insere o texto ``\linkedFileStyle{CIC.sty}'' com link para o arquivo (cujo caminho
+% absoluto seria /workspace/CIC-style/CIC.sty). Supondo que o arquivo não exista,
+% o nodme dado é inserido sem qualquer formatação (ex: ``CYC.sty''). Caso esteja
+% usando o Beamer, o link só é gerado para modo \emph{beamer}, nos demais modos
+% o texto é apenas formatado conforme o estilo definido.
+% \end{macro}
+%
+% \begin{macro}{\lstinputcode} \oarg{opções} \marg{arquivo}\\
+% Insere o código definido no arquivo dado, caso exista. As |<opções>| são
+% repassadas ao comando |\lstinputlisting|, e sobrescrevem as opções em vigor no
+% momento (estilo CIC-C). O título do código é definido como o nome do arquivo
+% dado com link para o arquivo (via |\linkFile| - e sujeito a |\basePathToFiles|).
+% Por exemplo:
+%\begin{verbatim}
+%\lstinputcode[linerange={18-26},
+%              morekeywords={bichos_incomodam}]{incomodam.c}%
+%\end{verbatim}
+%\lstinputcode[linerange={18-26},
+%              morekeywords={bichos_incomodam}]{incomodam.c}%
+%
+% Atenção para o símbolo `$@$', se seu código o conter, o \LaTeX\ irá interpretá-lo
+% como \emph{escapechar} e provavelmente você não terá o resultado desejado.
+% Caso precise mostrá-lo, mude o \emph{escapechar} nas opções passadas ao comando.
+% Alternativamente, você pode mudar o estilo \pacote{CIC}\ e escolher o símbolo
+% arbitrariamente.
+%
+% O comando não funciona em conjunto com o o comando |\only| para ``animações''
+% no código . Use o comando |\lstinputlisting| neste caso.
+% \end{macro}
+%
+% \begin{macro}{\terminalCommand} \oarg{prefixo} \marg{comando}\\
+% Insere uma caixa colorida similar a um terminal. O |<comando>| é inserido após o |<prefixo>| (se houver). Caso esteja usando Beamer, o comando aceita a definição de overlays.
+% \end{macro}
+%
+% \subsubsection{Comandos com Beamer}
+% Alguns comandos são definidos apenas se a classe Beamer for carregada.
+%
+% \begin{macro}{\uncoverComment} \marg{comentário}\\
+% Insere trechos de comentários em overlays específicos. Por exemplo:
+% \begin{verbatim}
+% scanf("%s", nome); @\uncoverComment<2->{implementação "perigosa"}@
+% \end{verbatim}
+% O resultado no primeiro overlay é:
+% \begin{lstlisting}
+%scanf("%s", nome);
+% \end{lstlisting}
+% E nos overlays seguintes:
+% \begin{lstlisting}
+%scanf("%s", nome); /* implementação "perigosa" */
+%\end{lstlisting}
+% \end{macro}
+%
+%
+% \subsection{CICFlowchart}
+% O arquivo CICFlowchart define o estilo CIC para desenho de fluxogramas com Tikz. As formas definidas são:
+%\begin{description}
+%\item[startstop] Terminal
+%\item[io] Entrada/Saída de dados
+%\item[decision] Bifurcação
+%\item[decision] Processo
+%\end{description}
+%
+%Além disso, as setas são definidas com estilos \emph{to} e \emph{from} para indicar o fluxo.
+%\begin{verbatim}
+%\begin{tikzpicture}%
+%    \node[startstop] (T) {Terminal};%
+%    \node[io] at(4,0) {E/S} edge[from] (T);%
+%    \node[decision] (D) at(4,-3) {Decisão};%
+%    \node[process] at(0, -3) {Processo} edge[to] (D);%
+%\end{tikzpicture}%
+%\end{verbatim}
+%
+%\begin{center}
+%	\begin{tikzpicture}%
+%		\node[startstop] (T) {Terminal};%
+%		\node[io] at(4,0) {E/S} edge[from] (T);%
+%		\node[decision] at(4,-3) (D) {Decisão};%
+%		\node[process] at(0, -3) {Processo} edge[to] (D);%
+%	\end{tikzpicture}%
+%\end{center}
+%
+%
+% \subsection{Cor}
+% Um tema de cores define quais cores são usadas na apresentação, possivelmente
+% com detalhes muito específicos. \pacote{CIC}\ define a paleta de cores do tema,
+% ajustando os itens da apresentação conforme três cores básicas:\\
+% \sq{redUnB}\hfill\sq{greenUnB}\hfill\sq{blueUnB}
+%
+%
+% \subsection{Exemplo de Uso}%
+% O arquivo \texttt{ex\_poster.tex} mostra um pôster o tema \pacote{CIC}.
+%
+%\setcounter{CodelineNo}{-1}
+%    \begin{macrocode}
+%<*exemplo>
+%    \end{macrocode}
+%    \begin{macrocode}
+\documentclass{beamer}%
+
+\usepackage{CIC}%
+
+\begin{document}%
+\begin{frame}[fragile]
+    \frametitle{Código: CIC-pseudo}%
+    \begin{lstlisting}[title={Exemplo de Constantes/Variáveis}, style=CIC-pseudo]
+        Algoritmo PesoDaTurma
+        Constantes
+            g : real <- 9.78 // m/s^2
+        Variáveis
+            massa, acumulado : real
+            nome : string
+        Início
+            acumulado <- 0
+            Para Cada aluno /in turma
+                Escreva("Digite seu nome: ")
+                Leia(nome)
+                Escreva("Digite sua massa: ")
+                Leia(massa)
+                Escreva(nome, " seu peso é ", massa*g)
+                acumulado <- acumulado + massa
+            FimPara
+            Escreva("O peso da turma é ", acumulado*g)
+        Fim
+    \end{lstlisting}%
+\end{frame}
+\end{document}%
+%    \end{macrocode}
+%    \begin{macrocode}
+%</exemplo>
+%    \end{macrocode}
+%
+% \Finale
+%
+% \typeout{}
+% \typeout{}
+% \typeout{******************************************************************}
+% \typeout{* Para gerar os arquivos e a documentacao, processe CIC.dtx no   *}
+% \typeout{* LaTeX.                                                         *}
+% \typeout{*                                                                *}
+% \typeout{* Para terminar a instalacao, copie o diretorio CIC para um      *}
+% \typeout{* diretorio conhecido por TeX (ex: /usr/local/lib/texmf).        *}
+% \typeout{******************************************************************}
+% \typeout{}
+% \typeout{}
+\endinput
