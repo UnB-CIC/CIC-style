@@ -606,6 +606,17 @@ Este arquivo pode ser distribuído e/ou modificado conforme:
 % Insere uma caixa colorida similar a um terminal. O |<comando>| é inserido após o |<prefixo>| (se houver). Caso esteja usando Beamer, o comando aceita a definição de overlays.
 % \end{macro}
 %
+% \begin{macro}{\fn} \marg{função}\\
+% Formata uma função em texto comum. Aceita argumentos opcionais entre chaves.
+% Por exemplo:
+%\begin{verbatim}
+% \fn{return}
+% \fn{main}{int argc, char *argv}
+%\end{verbatim}
+% Resultam em \fn{return}\ e \mbox{\fn{main}{int argc, char *argv}}%
+% \end{macro}
+%
+%
 % \subsubsection{Comandos com Beamer}
 % Alguns comandos são definidos apenas se a classe Beamer for carregada.
 %
@@ -661,47 +672,9 @@ Este arquivo pode ser distribuído e/ou modificado conforme:
 % \sq{redUnB}\hfill\sq{greenUnB}\hfill\sq{blueUnB}
 %
 %
-% \subsection{Exemplo de Uso}%
-% O arquivo \texttt{ex\_poster.tex} mostra um pôster o tema \pacote{CIC}.
-%
-%\setcounter{CodelineNo}{-1}
-%    \begin{macrocode}
-%<*exemplo>
-%    \end{macrocode}
-%    \begin{macrocode}
-\documentclass{beamer}%
-
-\usepackage{CIC}%
-
-\begin{document}%
-\begin{frame}[fragile]
-    \frametitle{Código: CIC-pseudo}%
-    \begin{lstlisting}[title={Exemplo de Constantes/Variáveis}, style=CIC-pseudo]
-        Algoritmo PesoDaTurma
-        Constantes
-            g : real <- 9.78 // m/s^2
-        Variáveis
-            massa, acumulado : real
-            nome : string
-        Início
-            acumulado <- 0
-            Para Cada aluno /in turma
-                Escreva("Digite seu nome: ")
-                Leia(nome)
-                Escreva("Digite sua massa: ")
-                Leia(massa)
-                Escreva(nome, " seu peso é ", massa*g)
-                acumulado <- acumulado + massa
-            FimPara
-            Escreva("O peso da turma é ", acumulado*g)
-        Fim
-    \end{lstlisting}%
-\end{frame}
-\end{document}%
-%    \end{macrocode}
-%    \begin{macrocode}
-%</exemplo>
-%    \end{macrocode}
+% \section{Exemplo de Uso}%
+% Os arquivos \texttt{ex\_lst} e \texttt{ex\_flow} apresentam exemplos de uso dos
+% pacotes.
 %
 % \Finale
 %
