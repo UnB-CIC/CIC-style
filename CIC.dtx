@@ -20,6 +20,7 @@
 %
 %<lst>\ProvidesPackage{CIClistings}[2015/02/03 v0.2 Estilo CIC para apresentacao de codigo.]%
 %<lst>
+%<lst>\RequirePackage{hyperref}% Links
 %<lst>\RequirePackage{listings}% Inserção de código fonte
 %<lst>\RequirePackage{xcolor}%   Definição de cores
 %<lst>
@@ -36,16 +37,16 @@
 %<lst>
 %<lst>% Alternar cores de fundo para linhas de código (facilita a leitura).
 %<lst>% (baseado em: http://tex.stackexchange.com/questions/18969)
-%<lst>\newlength{\@lstnumbersepLength}%
-%<lst>\newcommand\@realnumberstyle[1]{}%
+%<lst>\newlength{\lstnumbersepLength@CIClistings}%
+%<lst>\newcommand\realnumberstyle@CIClistings[1]{}%
 %<lst>\newcommand{\zebra}[2]{%
-%<lst>    {\@realnumberstyle{#2}}%
+%<lst>    {\realnumberstyle@CIClistings{#2}}%
 %<lst>    \begingroup%
 %<lst>    \lst@basicstyle%
 %<lst>    \ifodd\value{lstnumber}%
 %<lst>        \color{#1}%
-%<lst>        \rlap{\settowidth{\@lstnumbersepLength}{\thelstnumber}%
-%<lst>        \addtolength{\linewidth}{\@lstnumbersepLength}%
+%<lst>        \rlap{\settowidth{\lstnumbersepLength@CIClistings}{\thelstnumber}%
+%<lst>        \addtolength{\linewidth}{\lstnumbersepLength@CIClistings}%
 %<lst>        \color@block{\linewidth}{\ht\strutbox}{\dp\strutbox}}%
 %<lst>    \fi%
 %<lst>    \endgroup%
@@ -70,7 +71,7 @@
 %<lst>,numbers=left%
 %<lst>,numbersep=5pt%
 %<lst>,numberstyle=\zebra{gray!10}\tiny\color{blueUnB}%
-%<lst>,xleftmargin=.025\textwidth
+%<lst>,xleftmargin=1.4em
 %<lst>,firstnumber=1%
 %<lst>,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
 %<lst>          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
@@ -89,10 +90,10 @@
 %<lst>
 %<lst>\lstdefinestyle{CIC-C}{style=CIC,language=C
 %<lst>,morekeywords={main,printf,scanf,NULL,size_t,
-%<lst>,getchar,putchar,gets,puts%
+%<lst>,getchar,putchar,gets,puts,strcmp,strncmp%
 %<lst>,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
 %<lst>,malloc,calloc,realloc,free,abs,fabs%
-%<lst>,system,atoi,itoa}}%
+%<lst>,system,atoi,itoa,max,min,tolower,toupper,sqrt}}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-pseudo}{%
 %<lst>style=CIC
@@ -155,53 +156,43 @@
 %<lst>    {\newcommand<>{\uncoverComment}[1]{\only#2{\commentstyle/* #1 */}}}%
 %<lst>    {}%
 %<lst>
-%<lst>\newcommand{\basePathToFiles}[1]{\def\@basePathToFiles{#1}}%
-%<lst>\basePathToFiles{basePathToFilesNotSet}% Valor padrão
+%<lst>\newcommand{\basePathToFiles}[1]{\def\basePathToFiles@CIClistings{#1}}%
+%<lst>\basePathToFiles{.}% Valor padrão
 %<lst>
 %<lst>\newcommand{\linkedFileStyle}[1]{\texttt{#1}}%
 %<lst>
 %<lst>\newcommand{\linkFile}{\begingroup\catcode`_=12\relax \@dolinkFile}%
 %<lst>\newcommand{\@dolinkFile}[2][.]{%
-%<lst>  \IfFileExists{\@basePathToFiles/#1/#2}%
-%<lst>    {\href{file://\@basePathToFiles/#1/#2}{\linkedFileStyle{#2}}}%
-%<lst>    {#2}%
+%<lst>  \IfFileExists{\basePathToFiles@CIClistings/#1/#2}%
+%<lst>    {\href{run:\basePathToFiles@CIClistings/#1/#2}{\linkedFileStyle{#2}}}%
+%<lst>    {\PackageError{CIClistings}{Arquivo ``\basePathToFiles@CIClistings/#1/#2'' nao encontrado (linkFile)}}%
 %<lst>  \endgroup%
 %<lst>}%
-%<lst>
-%<lst>\@ifclassloaded{beamer}%
-%<lst>    {\mode<handout|second|trans|article>{% sem link para handout. etc
-%<lst>          \renewcommand{\@dolinkFile}[2][]{\linkedFileStyle{#2}\endgroup}}%
-%<lst>    }%
-%<lst>    {}%
 %<lst>
 %<lst>\newcommand{\lstinputcode}{\begingroup\catcode`_=12\relax \@dolstinputcode}%
 %<lst>\newcommand{\@dolstinputcode}[2][]{%
 %<lst>  \IfFileExists{#2}%
 %<lst>    {\lstinputlisting[title={\linkFile{#2}},#1]{#2}}%
-%<lst>    {
-%<lst>      \IfFileExists{code/#2}%
-%<lst>      {\lstinputlisting[title={\linkFile[code]{#2}},#1]{code/#2}}%
-%<lst>      {\PackageWarning{CIClistings}{Arquivo ``#2'' nao encontrado.)}}%
+%<lst>    {%
+%<lst>      \IfFileExists{\pathToSrc@CIClistings/#2}%
+%<lst>      {\lstinputlisting[title={\linkFile[\pathToSrc@CIClistings]{#2}},#1]{\pathToSrc@CIClistings/#2}}%
+%<lst>      {\PackageError{CIClistings}{Arquivo ``#2'' nao encontrado (lstinputlisting)}}%
 %<lst>    }%
 %<lst>  \endgroup%
 %<lst>}%
 %<lst>
-%<lst>\@ifclassloaded{beamer}%
-%<lst>{%
-%<lst>\newcommand<>{\terminalCommand}[2][\$]{%
-%<lst>\only#3{\colorbox{black}{\parbox[t]{\textwidth}{\textcolor{green}{\texttt{#1 #2}}}}}}%
+%<lst>\newcommand{\@doterminalCommand}[2][\$]{%
+%<lst>  \colorbox{black}{\parbox[t]{\textwidth}{\textcolor{green}{\texttt{#1 #2}}}}\endgroup%
 %<lst>}%
-%<lst>{%
-%<lst>\newcommand{\terminalCommand}[2][\$]{%
-%<lst>\colorbox{black}{\parbox[t]{\textwidth}{\textcolor{green}{\texttt{#1 #2}}}}}%
-%<lst>}%
+%<lst>
+%<lst>\newcommand{\terminalCommand}{\begingroup\catcode`_=12\relax \@doterminalCommand}%
 %<lst>
 %<lst>
 %<lst>% Configurações
 %<lst>
 %<lst>\renewcommand{\ttdefault}{pcr}% Fonte monospace
-%<lst>\lstset{style=CIC-C}% Estilo padrão para o ambiente listings
-%<lst>
+	%<lst>\lstset{style=CIC-C}% Estilo padrão para o ambiente listings
+	%<lst>
 %<flow>\ProvidesPackage{CICflowchart}[2014/09/19 v0.2 Estilo CIC para desenho de fluxogramas.]%
 %<flow>% (baseado em https://www.sharelatex.com/blog/2013/08/29/tikz-series-pt3.html)
 %<flow>
@@ -209,12 +200,11 @@
 %<flow>
 %<flow>\usetikzlibrary{shapes.geometric, arrows}%
 %<flow>
-%<flow>\newlength{\fd}\setlength{\fd}{3em}%
-%<flow>\tikzstyle{flowchart}=[node distance=\fd]%
-%<flow>\tikzstyle{flowchartnode}=[draw=black,text centered,text width=1.7\fd, minimum height=1.5\baselineskip]%
+%<flow>\tikzstyle{flowchart}=[node distance=3em]%
+%<flow>\tikzstyle{flowchartnode}=[draw=black,text centered,text width=5em, minimum height=1.5\baselineskip]%
 %<flow>
 %<flow>\tikzstyle{startstop}=[flowchartnode, rectangle, rounded corners, fill=red!30]%
-%<flow>\tikzstyle{io}=[flowchartnode, text width=1.3\fd, trapezium, trapezium left angle=75, trapezium right angle=105, fill=blue!30]%
+%<flow>\tikzstyle{io}=[flowchartnode, text width=4em, trapezium, trapezium left angle=75, trapezium right angle=105, fill=blue!30]%
 %<flow>\tikzstyle{process}=[flowchartnode, rectangle, fill=orange!30]%
 %<flow>\tikzstyle{decision}=[flowchartnode, diamond, fill=green!30, text badly centered, inner sep=0pt]%
 %<flow>
@@ -230,18 +220,24 @@
 %<cic>% Codificação
 %<cic>\usepackage[brazilian]{babel}%
 %<cic>\usepackage[utf8]{inputenc}%
+%<cic>\usepackage[T1]{fontenc}%
 %<cic>
 %<cic>\usepackage{CIClistings}%
 %<cic>\usepackage{CICflowchart}%
 %<cic>
-%<cic>\def\@fnArgument#1{\texttt{(#1)}{}}%
-%<cic>\newcommand{\fn}[1]{\texttt{#1}\@ifnextchar\bgroup{\@fnArgument}{}}%
+%<cic>\newcommand{\fn}{\begingroup\catcode`_=12\relax\dofn@CIClistings}%
+%<cic>\newcommand{\dofn@CIClistings}[1]{\texttt{#1}\endgroup}%
+%<cic>
+%<cic>\newcommand{\var}{\begingroup\catcode`_=12\relax\dovar@CIClistings}%
+%<cic>\newcommand{\dovar@CIClistings}[1]{\texttt{#1}\endgroup}%
 %<cic>
 %
 %<ex-lst>\documentclass{beamer}%
 %<ex-lst>
 %<ex-lst>\usepackage[brazilian]{babel}%
 %<ex-lst>\usepackage[utf8]{inputenc}%
+%<ex-lst>\usepackage[T1]{fontenc}%
+%<ex-lst>\usepackage{lmodern}%
 %<ex-lst>\usepackage{CIClistings}%
 %<ex-lst>
 %<ex-lst>\basePathToFiles{/home/gnramos/texmf/tex/latex/CIC-style}%
@@ -330,6 +326,7 @@
 %<ex-flow>
 %<ex-flow>\usepackage[brazilian]{babel}%
 %<ex-flow>\usepackage[utf8]{inputenc}%
+%<ex-flow>\usepackage[T1]{fontenc}%
 %<ex-flow>\usepackage{CICflowchart}%
 %<ex-flow>
 %<ex-flow>\begin{document}%
@@ -417,7 +414,8 @@ Este arquivo pode ser distribuído e/ou modificado conforme:
 
 \usepackage{amssymb}%
 \usepackage{xcolor}%
-\usepackage[hidelinks]{hyperref}%
+
+\hypersetup{hidelinks}%
 
 \definecolor{greenUnB}{HTML}{006633}%
 \definecolor{blueUnB}{HTML}{003366}%
@@ -536,10 +534,10 @@ Este arquivo pode ser distribuído e/ou modificado conforme:
 % Estes comandos são definidos para todas as classes.
 %
 % \begin{macro}{\basePathToFiles} \marg{caminho}\\
-% Define o \emph{caminho absoluto} para um arquivo a ser inserido no texto com um link pelo comando |\linkFile|.
+% Define o \emph{caminho} para um arquivo a ser inserido no texto com um link pelo comando |\linkFile|.
 % modo que se possa criar links dentro da apresentação. Obviamente os links não
 % funcionarão caso o caminho não esteja correto (por exemplo, usando o PDF da apresentação em
-% outra máquina). Por exemplo:
+% outra máquina). O valor padrão é ``.'', portanto os links são criados considerando o caminho relativo do arquivo \texttt{.tex} do documento original, mas poderia perfeitamente ser substituído por um caminho absoluto. Por exemplo:
 % \begin{verbatim}
 % \basePathToFiles{/workspace}%
 % \end{verbatim}
@@ -598,32 +596,26 @@ Este arquivo pode ser distribuído e/ou modificado conforme:
 % \end{macro}
 %
 % \begin{macro}{\fn} \marg{função}\\
-% Formata uma função em texto comum. Aceita argumentos opcionais entre chaves.
-% Por exemplo:
+% Formata uma função em texto comum. Por exemplo:
 %\begin{verbatim}
-% \fn{return}
-% \fn{main}{int argc, char *argv}
+% \fn{return}, \fn{main(int argc, char *argv)}
 %\end{verbatim}
-% Resultam em \fn{return}\ e \mbox{\fn{main}{int argc, char *argv}}%
+% Resultam em \fn{return}, \mbox{\fn{main(int argc, char *argv)}}%
 % \end{macro}
 %
+% \begin{macro}{\var} \marg{variável}\\
+% Formata uma variável em texto comum. Por exemplo:
+%\begin{verbatim}
+%\var{argc}, \var{argv}
+%\end{verbatim}
+% Resultam em \var{argc}, \var{argv}%
+%\end{macro}
 %
 % \subsubsection{Comandos com Beamer}
 % Alguns comandos são definidos apenas se a classe Beamer for carregada.
 %
-% \begin{macro}{\uncoverComment} \marg{comentário}\\
-% Insere trechos de comentários em overlays específicos. Por exemplo:
-% \begin{verbatim}
-% scanf("%s", nome); @\uncoverComment<2->{implementação "perigosa"}@
-% \end{verbatim}
-% O resultado no primeiro overlay é:
-% \begin{lstlisting}
-%scanf("%s", nome);
-% \end{lstlisting}
-% E nos overlays seguintes:
-% \begin{lstlisting}
-%scanf("%s", nome); /* implementação "perigosa" */
-%\end{lstlisting}
+% \begin{macro}{\uncoverComment<>} \marg{comentário}\\
+% Insere trechos de comentários em overlays específicos.
 % \end{macro}
 %
 %
