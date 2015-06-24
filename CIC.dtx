@@ -165,7 +165,7 @@
 %<lst>\newcommand{\@dolinkFile}[2][.]{%
 %<lst>  \IfFileExists{\basePathToFiles@CIClistings/#1/#2}%
 %<lst>    {\href{run:\basePathToFiles@CIClistings/#1/#2}{\linkedFileStyle{#2}}}%
-%<lst>    {\PackageError{CIClistings}{Arquivo ``\basePathToFiles@CIClistings/#1/#2'' nao encontrado (linkFile)}}%
+%<lst>    {\PackageError{CIClistings}{Arquivo "\basePathToFiles@CIClistings/#1/#2" nao encontrado (linkFile)}}%
 %<lst>  \endgroup%
 %<lst>}%
 %<lst>
@@ -176,7 +176,7 @@
 %<lst>    {%
 %<lst>      \IfFileExists{\pathToSrc@CIClistings/#2}%
 %<lst>      {\lstinputlisting[title={\linkFile[\pathToSrc@CIClistings]{#2}},#1]{\pathToSrc@CIClistings/#2}}%
-%<lst>      {\PackageError{CIClistings}{Arquivo ``#2'' nao encontrado (lstinputlisting)}}%
+%<lst>      {\PackageError{CIClistings}{Arquivo "\pathToSrc@CIClistings/#2" nao encontrado (lstinputlisting)}}%
 %<lst>    }%
 %<lst>  \endgroup%
 %<lst>}%
