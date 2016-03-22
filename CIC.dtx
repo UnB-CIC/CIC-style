@@ -65,6 +65,8 @@
 %<lst>,showstringspaces=false%
 %<lst>,tabsize=2%
 %<lst>,breaklines=true%
+%<lst>,breakatwhitespace=true%
+%<lst>,breakindent=0em%
 %<lst>,showlines=true%
 %<lst>,keepspaces=true%
 %<lst>,flexiblecolumns=true%
@@ -93,7 +95,7 @@
 %<lst>,getchar,putchar,gets,puts,strcmp,strncmp%
 %<lst>,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
 %<lst>,malloc,calloc,realloc,free,abs,fabs%
-%<lst>,system,atoi,itoa,max,min,tolower,toupper,sqrt}}%
+%<lst>,system,atoi,itoa,max,min,tolower,toupper,sqrt,assert}}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-pseudo}{%
 %<lst>style=CIC
@@ -140,6 +142,7 @@
 %<lst>          {/in}{{$\in$}}2%
 %<lst>          {/infty}{{$\infty$}}2%
 %<lst>          {/exists}{{$\exists$}}2%
+%<lst>          {/nexists}{{$\nexists$}}2%
 %<lst>          {emptyset}{{$\emptyset$}}1%
 %<lst>          {A_1}{{$A_{1}$}}2%
 %<lst>          {A_2}{{$A_{2}$}}2%
@@ -158,6 +161,8 @@
 %<lst>
 %<lst>\newcommand{\basePathToFiles}[1]{\def\basePathToFiles@CIClistings{#1}}%
 %<lst>\basePathToFiles{.}% Valor padrão
+%<lst>\newcommand{\basePathToSrc}[1]{\def\basePathToSrc@CIClistings{#1}}%
+%<lst>\basePathToSrc{../src}%
 %<lst>
 %<lst>\newcommand{\linkedFileStyle}[1]{\texttt{#1}}%
 %<lst>
@@ -174,9 +179,9 @@
 %<lst>  \IfFileExists{#2}%
 %<lst>    {\lstinputlisting[title={\linkFile{#2}},#1]{#2}}%
 %<lst>    {%
-%<lst>      \IfFileExists{\pathToSrc@CIClistings/#2}%
-%<lst>      {\lstinputlisting[title={\linkFile[\pathToSrc@CIClistings]{#2}},#1]{\pathToSrc@CIClistings/#2}}%
-%<lst>      {\PackageError{CIClistings}{Arquivo "\pathToSrc@CIClistings/#2" nao encontrado (lstinputlisting)}}%
+%<lst>      \IfFileExists{\basePathToSrc@CIClistings/#2}%
+%<lst>      {\lstinputlisting[title={\linkFile[\basePathToSrc@CIClistings]{#2}},#1]{\basePathToSrc@CIClistings/#2}}%
+%<lst>      {\PackageError{CIClistings}{Arquivo "\basePathToSrc@CIClistings/#2" nao encontrado (lstinputlisting)}}%
 %<lst>    }%
 %<lst>  \endgroup%
 %<lst>}%
