@@ -61,7 +61,6 @@
 %<lst>,commentstyle=\commentstyle%
 %<lst>%,identifierstyle=\color{orange}%
 %<lst>,escapechar=@%
-%<lst>,morecomment=[l]{//}%
 %<lst>,showstringspaces=false%
 %<lst>,tabsize=2%
 %<lst>,breaklines=true%
@@ -90,12 +89,16 @@
 %<lst>          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
 %<lst>}%
 %<lst>
-%<lst>\lstdefinestyle{CIC-C}{style=CIC,language=C
-%<lst>,morekeywords={main,printf,scanf,NULL,size_t,
+%<lst>\lstdefinestyle{CIC-C}{style=CIC,language=C%
+%<lst>,morecomment=[l]{//}%
+%<lst>,morekeywords={main,printf,scanf,NULL,size_t,%
 %<lst>,getchar,putchar,gets,puts,strcmp,strncmp%
 %<lst>,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
 %<lst>,malloc,calloc,realloc,free,abs,fabs%
 %<lst>,system,atoi,itoa,max,min,tolower,toupper,sqrt,assert}}%
+%<lst>
+%<lst>\lstdefinestyle{CIC-Python}{style=CIC,language=Python,alsoletter={.},
+%<lst>morekeywords={super,yield,True,False,random.shuffle,random.choice}}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-pseudo}{%
 %<lst>style=CIC
