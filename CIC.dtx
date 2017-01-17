@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2015 by Guilherme N. Ramos (gnramos@unb.br)
+% Copyright (C) 2017 by Guilherme N. Ramos (gnramos@unb.br)
 %
 % Este arquivo pode ser distribuído e/ou modificado conforme:
 %    1. LaTeX Project Public License e/ou
@@ -18,10 +18,11 @@
 
 %</all>
 %
-%<lst>\ProvidesPackage{CIClistings}[2015/02/03 v0.2 Estilo CIC para apresentação de código.]%
+%<lst>\ProvidesPackage{CIClistings}[2017/01/17 v0.3 Estilo CIC para apresentação de código.]%
 %<lst>
 %<lst>\RequirePackage{hyperref}% Links
 %<lst>\RequirePackage{listings}% Inserção de código fonte
+%<lst>\RequirePackage{textcomp}% Apóstrofe vertical
 %<lst>\RequirePackage{xcolor}%   Definição de cores
 %<lst>
 %<lst>% Cores
@@ -87,6 +88,7 @@
 %<lst>          {ú}{{\'{u}}}1 {Ú}{{\'{U}}}1%
 %<lst>          {ü}{{\"{u}}}1 {Ü}{{\"{U}}}1%
 %<lst>          {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1%
+%<lst>,upquote=true%
 %<lst>}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-C}{style=CIC,language=C%
