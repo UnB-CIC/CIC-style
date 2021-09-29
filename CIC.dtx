@@ -26,8 +26,8 @@
 %<lst>\RequirePackage{xcolor}%   Definição de cores
 %<lst>
 %<lst>% Cores
-%<lst>\definecolor{greenUnB}{HTML}{006633}%
-%<lst>\definecolor{blueUnB}{HTML}{003366}%
+%<lst>\definecolor{greenUnB}{HTML}{00822E}% Valor web safe: 006633
+%<lst>\definecolor{blueUnB}{HTML}{003A7A}% Valor web safe: 003366
 %<lst>\definecolor{redUnB}{HTML}{BC0000}%
 %<lst>
 %<lst>% Estilos para código.
@@ -95,13 +95,13 @@
 %<lst>,morecomment=[l]{//}%
 %<lst>,morekeywords={main,printf,scanf,NULL,size_t,%
 %<lst>,getchar,putchar,gets,puts,strcmp,strncmp%
-%<lst>,FILE,fopen,fclose,,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
+%<lst>,FILE,fopen,fclose,fscanf,fprintf,fread,fwrite,fseek,rewind,fputc,fgetc,fputs,fgets%
 %<lst>,malloc,calloc,realloc,free,abs,fabs%
 %<lst>,system,atoi,itoa,max,min,tolower,toupper,sqrt,assert}}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-Python}{style=CIC,language=Python,alsoletter={.},
-%<lst>morekeywords={super,yield,True,False,with,as,random.shuffle,random.choice%
-%<lst>,struct.pack,struct.unpack,subprocess.call,sys.exit}%
+%<lst>morekeywords={None,super,yield,True,False,with,as,random.shuffle,random.choice%
+%<lst>,struct.pack,struct.unpack,subprocess.call,sys.exit,math.sqrt}%
 %<lst>,literate={â}{{\^{a}}}1 {Â}{{\^{A}}}1%
 %<lst>          {ã}{{\~{a}}}1 {Ã}{{\~{A}}}1%
 %<lst>          {á}{{\'{a}}}1 {Á}{{\'{A}}}1%
@@ -120,6 +120,7 @@
 %<lst>          {write}{{\keywordstyle{write}}}5%
 %<lst>          {encode}{{\keywordstyle{encode}}}6
 %<lst>          {decode}{{\keywordstyle{decode}}}6
+%<lst>          {.format}{{.\keywordstyle{format}}}6
 %<lst>}%
 %<lst>
 %<lst>\lstdefinestyle{CIC-pseudo}{%
